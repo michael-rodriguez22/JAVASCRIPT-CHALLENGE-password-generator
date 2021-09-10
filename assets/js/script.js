@@ -2,7 +2,7 @@
 function generatePassword() {
   // ask for length of password
   let passwordLength;
-  
+
   function passwordLengthPrompt() {
     let input = window.prompt(
       "How many characters would you like your password to have? (input must be a whole number between 8 and 128)"
@@ -17,7 +17,33 @@ function generatePassword() {
   }
 
   passwordLengthPrompt();
+
   // ask which characters will be used
+  const characterTypes = {};
+  
+  function characterTypesPrompt() {
+    function check(type) {
+      return window.confirm(`Would you like to include ${type}? Select 'OK' for yes or 'Cancel' for no.`);
+    }
+    characterTypes.uppercase = check("uppercase letters");
+    characterTypes.lowercase = check("lowercase letters");
+    characterTypes.numbers = check("numbers");
+    characterTypes.specials = check("special characters");
+    let valid;
+    for (property in characterTypes) {
+      if (characterTypes[property] === true) valid = true;
+    }
+    if (valid) {
+      console.log("character types:");
+      console.dir(characterTypes);
+    } else {
+      window.alert("Error: No character types included. Please include at least one character type.");
+      characterTypesPrompt();
+    }
+  }
+
+  characterTypesPrompt();
+  
   // return randomly generated password in accordance with user criteria
 }
 
